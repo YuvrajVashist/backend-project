@@ -1,25 +1,24 @@
-require('dotenv').config({path:'./env'})
+import dotenv from "dotenv";
+import app from "./app.js";
+import connecDB from "./db/index.js";
 
-import mongoose from "mongoose";
-import {DB_NAME} from '../constants'
-import connecDB from "./db";
-import e from "express";
-
+dotenv.config();
 
 connecDB()
+    .then(() => {
+        const server = app.listen(
+            process.env.PORT || 8000,
+            () => {
+                console.log(
+                    `Server is running on port ${process.env.PORT || 8000}`
+                );
+            }
+        );
 
-.then(()=>{
-    const server = app.listen(process.env.PORT || 8000,()=>{
-        console.log(`server is runnig on ${process.env.PORT}`)
+        server.on("error", (err) => {
+            console.log("The error is:", err);
+        });
     })
-
-    //we use app.on when server is returning something
-    server.on('error',(err)=>{
-        console.log("the error is: ",err)
-    })
-})
-
-
-.catch((err) =>{
-    console.log("error",err)
-})
+    .catch((err) => {
+        console.log("Error:", err);
+    });
