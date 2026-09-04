@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import { DB_NAME } from "../../constants.js";
-import app from "../app.js";
+import { DB_NAME } from "../constants.js";
+
 
 //we use async becuase dB can be anywhere so first we have to connect the server to dB
 
