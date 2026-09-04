@@ -10,20 +10,20 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_SECRET_KEY // Click 'View API Keys' above to copy your API secret
 });
 
-const uploadOnCloudinary = async (localFilePath)=>{
-    try{
-        if(!localFilePath) console.log("There is no such file Path Exist")
+const uploadOnCloudinary = async (localFilePath) => {
+    try {
+        if (!localFilePath) console.log("There is no such file Path Exist")
         //upload file on clodinary
-        const response = await cloudinary.uploader.upload(localFilePath,{
-            resource_type:"auto"
+        const response = await cloudinary.uploader.upload(localFilePath, {
+            resource_type: "auto"
         })
 
         //file upload successfully
         console.log(response.url)
-        console.log("The link of file is "+localFilePath)
+        console.log("The link of file is " + localFilePath)
         return response
 
-    } catch (error){
+    } catch (error) {
         //why do we use unlinkSync not unlink:
         //file should be unlinked first and then do further steps
         fs.unlinkSync(localFilePath)
@@ -32,3 +32,4 @@ const uploadOnCloudinary = async (localFilePath)=>{
 }
 
 export default uploadOnCloudinary
+
