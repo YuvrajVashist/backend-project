@@ -65,7 +65,7 @@ const registerUser =  asyncHandler ( async (req,res) => {
 
     //5
     const avatar = await uploadOnCloudinary(avatarLocalPath)
-    const coverImage = await uploadOnCloudinary(coverImageLocalPath)
+    const coverImage = coverImageLocalPath? await uploadOnCloudinary(coverImageLocalPath):null
 
     if(!avatar){
         throw new ApiError(400,"avatar not uploaded")
@@ -74,6 +74,7 @@ const registerUser =  asyncHandler ( async (req,res) => {
     //6
     const user = await User.create({
         fullName,
+        email,
         avatar:avatar.url,
         coverImage:coverImage?.url || "",
         password,
@@ -82,7 +83,7 @@ const registerUser =  asyncHandler ( async (req,res) => {
 
     //7 first checking the user registered or not
     //jo chiz nhi leni uske aage - lga do
-    const createdUser = await user.findByID(user._id).select(
+    const createdUser = await User.findById(user._id).select(
         "-password -refreshToken"
     )
 

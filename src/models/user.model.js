@@ -67,17 +67,17 @@ const userSchema = new mongoose.Schema(
 
 
 // Mongoose middleware that runs before a particular operation happens
-userSchema.pre("save", async function (next) {
+userSchema.pre("save", async function () {
 
     // If the password has not been modified, skip hashing
-    if (!this.isModified("password")) return next();
+    if (!this.isModified("password")) return ;
 
     // Hash the password
     // Higher number of salt rounds generally means more processing time
     this.password = await bcrypt.hash(this.password, 10);
 
     // Continue with the save operation
-    next();
+    
 });
 
 

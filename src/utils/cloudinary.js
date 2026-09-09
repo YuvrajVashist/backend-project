@@ -26,7 +26,14 @@ const uploadOnCloudinary = async (localFilePath) => {
     } catch (error) {
         //why do we use unlinkSync not unlink:
         //file should be unlinked first and then do further steps
-        fs.unlinkSync(localFilePath)
+        
+        // fs.unlinkSync(localFilePath)
+        // return null;
+
+        console.log("Cloudinary upload error: ", error)
+        if(localFilePath){
+            fs.unlink(localFilePath)
+        }
         return null;
     }
 }
