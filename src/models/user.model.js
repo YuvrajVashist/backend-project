@@ -30,7 +30,7 @@ const userSchema = new mongoose.Schema(
             trim: true
         },
 
-        fullname: {
+        fullName: {
             type: String,
             required: true,
             trim: true,
