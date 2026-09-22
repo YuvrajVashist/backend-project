@@ -10,6 +10,7 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_SECRET_KEY // Click 'View API Keys' above to copy your API secret
 });
 
+
 const uploadOnCloudinary = async (localFilePath) => {
     try {
         if (!localFilePath) console.log("There is no such file Path Exist")
@@ -19,8 +20,9 @@ const uploadOnCloudinary = async (localFilePath) => {
         })
 
         //file upload successfully
-        console.log(response.url)
-        console.log("The link of file is " + localFilePath)
+        // console.log(response.url)
+        // console.log("The link of file is " + localFilePath)
+        fs.unlinkSync(localFilePath)
         return response
 
     } catch (error) {
