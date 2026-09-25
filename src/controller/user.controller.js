@@ -12,7 +12,7 @@ const generateAccessAndRefreshToken = async(userId)=>{
         //we give access token to the user
         user.refreshToken = refreshToken
 
-        //just save the password to the db
+        //just save the password to the db and donot validate it 
         await user.save({validateBeforeSave:false})
 
         return {accessToken,refreshToken}
@@ -72,7 +72,9 @@ const registerUser = asyncHandler(async (req, res) => {
     //     throw new ApiError(409,"User already existed")
     // }
 
+    console.log(username)
     const normalizedUsername = username.toLowerCase().trim();
+    console.log("the username is: ",normalizedUsername)
     const normalizedEmail = email.toLowerCase().trim();
 
     const existingByUsername = await User.findOne({
@@ -149,7 +151,7 @@ const loginUser = asyncHandler(async (req, res) => {
     const { email, username, password } = req.body
 
     //2
-    if (!username || !email) {
+    if (!(username || email)) {
         throw new ApiError(400, "username or email required")
     }
 
@@ -219,6 +221,9 @@ const logoutUser = asyncHandler(async(req,res)=>{
             "user logged out"
         )
     );
+
+    //to logout user from all devices
+
 })
 
 export { registerUser, loginUser, logoutUser }

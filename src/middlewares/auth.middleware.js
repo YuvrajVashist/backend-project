@@ -1,8 +1,8 @@
 // in this file we are designing a middleware which perform the authorization of user
 
-import { User } from "../models/user.model";
-import { ApiError } from "../utils/apiError";
-import { asyncHandler } from "../utils/asyncHandler";
+import { User } from "../models/user.model.js";
+import { ApiError } from "../utils/apiError.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
 import jwt, { decode } from "jsonwebtoken"
 
 export const verifyJWT = asyncHandler(async(req,res,next)=>{
