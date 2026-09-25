@@ -76,7 +76,7 @@ const registerUser = asyncHandler(async (req, res) => {
     const normalizedUsername = username.toLowerCase().trim();
     const normalizedEmail = email.toLowerCase().trim();
     console.log("username is: ",normalizedUsername)
-
+    console.log("email is ",normalizedEmail)
     const existingByUsername = await User.findOne({
         username: normalizedUsername
     });
