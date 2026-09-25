@@ -7,8 +7,8 @@ import { ApiResponse } from "../utils/apiResponse.js";
 const generateAccessAndRefreshToken = async(userId)=>{
     try{
         const user = await User.findById(userId)
-        const accessToken = user.generateAccessToken
-        const refreshToken = user.generateRefreshToken
+        const accessToken = user.generateAccessToken()
+        const refreshToken = user.generateRefreshToken()
         //we give access token to the user
         user.refreshToken = refreshToken
 
@@ -35,22 +35,22 @@ const registerUser = asyncHandler(async (req, res) => {
 
     //1
     const { fullName, email, username, password } = req.body
-    console.log("email", email);
+    // console.log("email", email);
 
     //2
-    if (fullName === "") {
-        throw new ApiError(400, "fullname is required")
+    if(!fullName?.trim()){
+        throw new ApiError(400,"full name is required")
     }
 
-    if (email === "") {
-        throw new ApiError(400, "email is required")
+    if(!email?.trim()){
+        throw new ApiError(400,"email required")
     }
 
-    if (username === "") {
-        throw new ApiError(400, "username is required")
+    if(!username?.trim()){
+        throw new ApiError(400,"username cannot be empty")
     }
 
-    if (password === "") {
+    if (!password?.trim()) {
         throw new ApiError(400, "password is required")
     }
 
@@ -63,19 +63,19 @@ const registerUser = asyncHandler(async (req, res) => {
      }
     */
 
-    //3
-    // const existedUser = await User.findOne({
-    //     $or: [ {username},{email}]
-    // })
+    // 3
+    const existedUser = await User.findOne({
+        $or: [ {username},{email}]
+    })
 
-    // if(existedUser){
-    //     throw new ApiError(409,"User already existed")
-    // }
+    if(existedUser){
+        throw new ApiError(409,"User already existed")
+    }
 
-    console.log(username)
+    
     const normalizedUsername = username.toLowerCase().trim();
-    console.log("the username is: ",normalizedUsername)
     const normalizedEmail = email.toLowerCase().trim();
+    console.log("username is: ",normalizedUsername)
 
     const existingByUsername = await User.findOne({
         username: normalizedUsername

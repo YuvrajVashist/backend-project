@@ -99,11 +99,11 @@ userSchema.methods.generateAccessToken = function () {
             userName: this.username
         },
         //secret key
-        process.env.ACCESS_TOKENT_SECRET,
+        process.env.ACCESS_TOKEN_SECRET,
         {
             //option
             //expiry object me jata hai
-            expiresIn: process.env.ACCESS_TOKENT_EXPIRY
+            expiresIn: process.env.ACCESS_TOKEN_EXPIRY
         }
     )
 }
