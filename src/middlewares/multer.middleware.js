@@ -23,8 +23,8 @@ export {upload}
 
 // //we are creating the middleware
 
-// const send = multer({
+ const send = multer({
 
 //     //storage tell multer how the files should be stored
-//     storage:memoryStorage
-// })
+     storage:memoryStorage
+})

@@ -276,4 +276,31 @@ const refreshAceessToken = asyncHandler(async(req,res)=>{
     }
 })
 
-export { registerUser, loginUser, logoutUser,refreshAceessToken }
+// this is for changing the password 
+// now to change the password we need old password from user and take new password from user and save it to DB
+
+const changeCurrentPassword = asyncHandler(async (req,res)=>{
+    const {oldPassword,newPassword} = req.body
+
+    //we are extracting the old password
+    const user = await User.findById(req.user?._id)
+    const isPasswordCorrect = await user.isPasswordCorrect(oldPassword)
+
+    if(!isPasswordCorrect){
+        throw new ApiError(400,"Invalid password")
+    }
+
+    //now we get the password and creating new password
+    user.password = newPassword
+    await user.save({validateBeforeSave:false})
+
+    return res
+    .status(200)
+    .json(
+        new ApiResponse(200,{},"password reset successfully")
+    )
+})
+
+
+
+export { registerUser, loginUser, logoutUser,refreshAceessToken,changeCurrentPassword }
